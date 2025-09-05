@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libertinus+Serif+Display&family=Story+Script&display=swap" rel="stylesheet">
+<style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fff5f8 0%, #ffcfe1 25%, #ffb1f8 50%, #f888ef 75%, #ff75ac 100%);
+            --carousel-bg-gradient: linear-gradient(135deg, #3d013b 0%, #5f2d57 50%, #6e0259 100%);
+            --primary-pink: #e91e63;
+            --secondary-pink: #f48fb1;
+            --light-pink: #fce4ec;
+            --dark-pink: #ad1457;
+            --white: #ffffff;
+            --shadow-light: rgba(233, 30, 99, 0.15);
+            --shadow-medium: rgba(233, 30, 99, 0.2);
+            --shadow-strong: rgba(233, 30, 99, 0.4);
+            /* MODIFICADO: Sombra de texto principal a rosa brillante */
+            --text-shadow: 3px 3px 8px rgba(233, 30, 99, 0.5);
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            user-select: none; /* Bloquear selección en toda la página */
+            -webkit-user-select: none; /* Para navegadores basados en WebKit */
+            -moz-user-select: none; /* Para Firefox */
+            -ms-user-select: none; /* Para Internet Explorer/Edge */
+        }
+        
+        html, body {
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: center, 0% 50%; }
+            25% { background-position: center, 100% 50%; }
+            50% { background-position: center, 100% 100%; }
+            75% { background-position: center, 0% 100%; }
+            100% { background-position: center, 0% 50%; }
+        }
+
+        #memories-page {
+            /*display: none;*/ 
+            width: 100%; 
+            height: 100%; 
+            overflow-y: auto;
+            /* MODIFICADO: Imagen de fondo añadida */
+            background-image: url('assets/back.png'), var(--bg-gradient);
+            background-size: cover, 400% 400%;
+            background-position: center, 0% 50%;
+            animation: gradientFlow 20s ease infinite;
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px;
+        }
+
+        #love-letter-container {
+            max-width: 700px; 
+            margin: 30px 0; 
+            text-align: center;
+            justify-content:center ;
+        }
+        
+        #love-letter-container h2 {
+            font-family: 'Story Script', cursive; 
+            color: var(--primary-pink);
+            font-size: 3.2rem; 
+            margin-bottom: 20px; 
+            text-shadow: var(--text-shadow); /* Sombra rosa aplicada */
+            font-weight: 700;
+        }
+
+        .card-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-image {
+            width: 300px;
+            height: auto;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: heartbeat 1.8s ease-in-out infinite;
+            filter: drop-shadow(0 16px 40px rgba(233, 30, 99, 0.6));
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { 
+                transform: scale(1); 
+                filter: drop-shadow(0 16px 40px rgba(233, 30, 99, 0.6));
+            }
+            50% { 
+                transform: scale(1.15); 
+                filter: drop-shadow(0 20px 45px rgba(233, 30, 99, 0.7));
+            }
+        }
+
+        .card-image:hover {
+            animation: heartbeat 1.2s ease-in-out infinite;
+            filter: drop-shadow(0 18px 45px rgba(233, 30, 99, 0.65));
+        }
+        
+        #love-letter {
+            background: linear-gradient(145deg, rgba(255, 245, 250, 0.98), rgba(252, 228, 236, 0.98));
+            padding: 50px; 
+            border-radius: 30px; 
+            border: 3px solid rgba(233, 30, 99, 0.3);
+            /* FUENTE MODIFICADA: Aplicada la nueva fuente Comic Relief */
+            font-family: 'Libertinus Serif Display', cursive;
+            color: #333; 
+            font-size: 1.15rem;
+            line-height: 1.9; 
+            box-shadow: 0 20px 50px rgba(233, 30, 99, 0.2), 0 5px 15px rgba(233, 30, 99, 0.1);
+            position: relative; 
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 0;
+            padding: 0 50px;
+        }
+
+        #love-letter.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            max-height: 1000px;
+            padding: 50px;
+            margin-top: 30px;
+        }
+
+        #love-letter.hide {
+            opacity: 0;
+            transform: translateY(-30px) scale(0.95);
+            max-height: 0;
+            padding: 0 50px;
+        }
+        
+        #love-letter::before {
+            content: '💕'; 
+            position: absolute; 
+            top: 20px; 
+            left: 25px; 
+            font-size: 2rem;
+            opacity: 0.8;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        #love-letter::after {
+            content: '💕'; 
+            position: absolute; 
+            /* MODIFICADO: Se ha bajado la posición para no superponerse al texto */
+            bottom: 10px; 
+            right: 70px; 
+            font-size: 2rem;
+            opacity: 0.8;
+            animation: float 3s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .close-button:hover {
+            background: linear-gradient(135deg, var(--dark-pink), var(--primary-pink));
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+        }
+        .love-phrase {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Comic Relief', cursive;
+            font-size: 1.5rem;
+            color: #000000; /* Rosa neón más brillante */
+            text-shadow: 
+                0 0 25px rgba(250, 99, 252, 0.9), /* Sombra negra más intensa */
+                0 0 40px rgb(255, 122, 255), /* Sombra rosa neón más intensa */
+                0 0 60px rgba(255, 133, 227, 0.9); /* Sombra blanca más intensa */
+            opacity: 0;
+            animation: fadeOut 3.5s ease-out forwards;
+            z-index: 1000;
+            pointer-events: none;
+        }
+</style>
+</head>
+<body>
+    <div id="memories-page">
+        <div id="love-letter-container">
+            <h2>Lo Siento 🥹</h2>
+            <div class="card-container">
+                <img id="card-image" class="card-image" src="https://png.pngtree.com/png-clipart/20230202/ourmid/pngtree-simple-love-envelopes-png-image_6583208.png" alt="Carta de Amor" onclick="toggleLetter()">
+            </div>
+            <div id="love-letter">
+                <button class="close-button" onclick="toggleLetter()">&times;</button>
+                Mi amor, desde el primer día que te vi, supe que eras mi hogar. Cada risa, cada lágrima, cada abrazo contigo ha sido un tesoro que guardo en mi corazón. Eres mi sol en los días grises, mi refugio en las tormentas, y mi alegría en cada momento. No hay palabras suficientes para expresar cuánto te amo, pero prometo pasar cada día demostrándotelo con hechos, con cariño, con todo lo que soy. Gracias por ser mi todo, hoy y siempre.
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        // Estado de la carta
+        let isLetterOpen = false;
+
+        window.toggleLetter = function() {
+            const letter = document.getElementById('love-letter');
+            const cardImage = document.getElementById('card-image');
+            
+            if (!isLetterOpen) {
+                cardImage.style.opacity = '0';
+                cardImage.style.transform = 'scale(0.8)';
+                
+                setTimeout(() => {
+                    cardImage.style.display = 'none';
+                    letter.classList.remove('hide');
+                    letter.classList.add('show');
+                }, 300);
+                
+                isLetterOpen = true;
+            } else {
+                letter.classList.remove('show');
+                letter.classList.add('hide');
+                
+                setTimeout(() => {
+                    cardImage.style.display = 'block';
+                    setTimeout(() => {
+                        cardImage.style.opacity = '1';
+                        cardImage.style.transform = 'scale(1)';
+                    }, 50);
+                }, 400);
+                
+                isLetterOpen = false;
+            }
+        };
+    </script>
+</body>
+</html>
